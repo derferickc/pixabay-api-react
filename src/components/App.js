@@ -102,12 +102,12 @@ class App extends Component {
 
   componentDidMount() {
     // Check to see if local storage item key exists
-    this.saveImageData = JSON.parse(localStorage.getItem('localSavedImages'))
+    const saveImageData = JSON.parse(localStorage.getItem('localSavedImages'))
 
     // If it does, then set the local saved items to state saved
     if(localStorage.getItem('localSavedImages')) {
       this.setState({
-        saved: this.saveImageData
+        saved: saveImageData
       })
     }
   }
