@@ -30,8 +30,9 @@ class App extends Component {
     const apiKey = '13136421-266c28a6d61717bc2e4e6a83e'
 
     let searchTextAdjust = this.state.searchText.split(' ').join('+').toLowerCase();
+    let fetchQuery = `${apiUrl}/?key=${apiKey}&q=${searchTextAdjust}&image_type=photo&per_page=${this.state.amount}&safesearch=true&category=${this.state.filter}`
 
-    fetch(`${apiUrl}/?key=${apiKey}&q=${searchTextAdjust}&image_type=photo&per_page=${this.state.amount}&safesearch=true&category=${this.state.filter}`)
+    fetch(fetchQuery)
       .then(response => response.json())
       .then(
         (result) => {
