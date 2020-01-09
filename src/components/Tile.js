@@ -25,7 +25,6 @@ export default function Tile (props) {
         </div>
 
         <div className="tile-likes">
-          
           <div className="index-of-result">Index #: {props.index}</div>
           <span className='tile-like'>
             <strong>{props.likes}</strong>

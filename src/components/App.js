@@ -112,10 +112,10 @@ class App extends Component {
     }
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    // Check to see if the next state.saved is different from the current one, if so, update local storage to match it
-    if(nextState.saved !== this.state.saved) {
-      localStorage.setItem('localSavedImages', JSON.stringify(nextState.saved))
+  componentDidUpdate(prevProps, prevState) {
+    // Check to see if the previous state.saved is different from the current one, if so, update local storage to match it
+    if(prevState.saved !== this.state.saved) {
+      localStorage.setItem('localSavedImages', JSON.stringify(this.state.saved))
     }
   }
 
@@ -124,8 +124,6 @@ class App extends Component {
     if(this.state.saved.length > 0) {
       const indexOfID = this.state.saved.findIndex((saved) => saved.id === id)
       // Check to see if ID already exists in the saved state
-      console.log('hello fred')
-
       if(indexOfID === -1) {
         this.setState((currentState) => {
           return {
