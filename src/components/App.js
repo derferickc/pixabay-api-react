@@ -34,18 +34,21 @@ class App extends Component {
     fetch(`${apiUrl}/?key=${apiKey}&q=${searchTextAdjust}&image_type=photo&per_page=${this.state.amount}&safesearch=true&category=${this.state.filter}`)
       .then(response => response.json())
       .then(
-        // Handle the result
         (result) => {
-          this.setState({
-            imageData : result
-          });
-        },
-        // Handle error 
-        (error) => {
-          this.setState({
-            error: "No matching images could be found"
-          })
-        },
+          // Handle error 
+          if(result.hits.length == 0) {
+            this.setState({
+              error: "No matching images could be found",
+              imageData: ''
+            })
+          } else {
+          // Handle the result
+            this.setState({
+              imageData : result,
+              error: null
+            });
+          }
+        }
       )
   }
 
@@ -136,17 +139,19 @@ class App extends Component {
                 disabled={!this.state.searchText}>
                 Search
               </button>
-
-              {error && <p className='center-text error'>{error}</p>}
-
-              {imageData &&
-                <ImagesGrid
-                  images={imageData.hits}
-                  savePicture={this.handleSaveImage}
-                  savedImages={this.state.saved}
-                />
-              }
             </form>
+
+            {error &&
+              <p className='center-text error'>{error}</p>
+            }
+
+            {imageData &&
+              <ImagesGrid
+                images={imageData.hits}
+                savePicture={this.handleSaveImage}
+                savedImages={this.state.saved}
+              />
+            }
           </div>
 
           <div className="col-4 right-wrapper text-left">
