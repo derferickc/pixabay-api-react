@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import Saved from './Saved'
-import ImagesGrid from './ImagesGrid'
+import Imagesgrid from './Imagesgrid'
 import '../App.scss'
 
 class App extends Component {
@@ -84,7 +84,8 @@ class App extends Component {
             if(result.hits.length === 0) {
               this.setState({
                 error: "No matching images could be found",
-                imageData: ''
+                imageData: '',
+                filter: ''
               })
             } else {
             // Handle the result
@@ -99,11 +100,32 @@ class App extends Component {
     }
   }
 
+  componentDidMount() {
+    // Check to see if local storage item key exists
+    this.saveImageData = JSON.parse(localStorage.getItem('localSavedImages'))
+
+    // If it does, then set the local saved items to state saved
+    if(localStorage.getItem('localSavedImages')) {
+      this.setState({
+        saved: this.saveImageData
+      })
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    // Check to see if the next state.saved is different from the current one, if so, update local storage to match it
+    if(nextState.saved !== this.state.saved) {
+      localStorage.setItem('localSavedImages', JSON.stringify(nextState.saved))
+    }
+  }
+
   handleSaveImage(id, previewURL) {
     // Do not search state for id if there is only one saved id
     if(this.state.saved.length > 0) {
       const indexOfID = this.state.saved.findIndex((saved) => saved.id === id)
       // Check to see if ID already exists in the saved state
+      console.log('hello fred')
+
       if(indexOfID === -1) {
         this.setState((currentState) => {
           return {
@@ -113,6 +135,7 @@ class App extends Component {
             }])
           }
         })
+        
       // If the id already exists, filter out and return the array object
       } else {
         this.setState((currentState) => {
@@ -181,7 +204,7 @@ class App extends Component {
             }
 
             {imageData &&
-              <ImagesGrid
+              <Imagesgrid
                 images={imageData.hits}
                 savePicture={this.handleSaveImage}
                 savedImages={this.state.saved}
