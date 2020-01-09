@@ -6,8 +6,9 @@ class ImagesGrid extends Component {
   render() {
     return (
       <div>
-        {this.props.images.map((image) => (
+        {this.props.images.map((image, index) => (
           <Tile
+            index={index}
             key={image.id}
             id={image.id}
             likes={image.likes}
