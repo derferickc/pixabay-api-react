@@ -36,7 +36,7 @@ class App extends Component {
       .then(
         (result) => {
           // Handle error 
-          if(result.hits.length == 0) {
+          if(result.hits.length === 0) {
             this.setState({
               error: "No matching images could be found",
               imageData: ''
