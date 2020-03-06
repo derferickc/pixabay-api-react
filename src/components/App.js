@@ -4,26 +4,16 @@ import Imagesgrid from './Imagesgrid'
 import '../App.scss'
 
 class App extends Component {
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      searchText: '',
-      amount: 10,
-      imageData: '',
-      error: null,
-      filter: '',
-      saved: [],
-    }
-
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleFilterChange = this.handleFilterChange.bind(this)
-    this.handleSaveImage = this.handleSaveImage.bind(this)
+  state = {
+    searchText: '',
+    amount: 10,
+    imageData: '',
+    error: null,
+    filter: '',
+    saved: [],
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault()
 
     const apiUrl = 'https://pixabay.com/api'
@@ -53,7 +43,7 @@ class App extends Component {
       )
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     if(event.target.value === '') {
       this.setState({
         searchText: event.target.value,
@@ -66,7 +56,7 @@ class App extends Component {
     }
   }
 
-  handleFilterChange(event) {
+  handleFilterChange = (event) => {
     if(this.state.searchText !== '') {
       let filterValue = event.target.value
 
@@ -119,7 +109,7 @@ class App extends Component {
     }
   }
 
-  handleSaveImage(id, previewURL) {
+  handleSaveImage = (id, previewURL) => {
     // Do not search state for id if there is only one saved id
     if(this.state.saved.length > 0) {
       const indexOfID = this.state.saved.findIndex((saved) => saved.id === id)
